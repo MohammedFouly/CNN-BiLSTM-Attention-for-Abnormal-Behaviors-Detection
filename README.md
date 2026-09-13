@@ -94,3 +94,5 @@ frontend/
 - `GET /api/stats` — live throughput/anomaly-rate/latency and chain status
 - `GET /api/audit/export` — full on-chain event trail as CSV
 - `WS /ws/feed` — live event + alert stream
+# CNN-BiLSTM-Attention-for-Abnormal-Behaviors-Detection
+Developing a Hybrid Neural Network Model with Attention Mechanism for Effectively Abnormal Behaviors Detection in Blockchain based Healthcare System
