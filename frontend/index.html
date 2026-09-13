@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CNN-BiLSTM+Attention for Abnormal Behaviors Detection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="title-block">
+      <h1>CNN-BiLSTM+Attention <span class="title-accent">for Abnormal Behaviors Detection</span></h1>
+      <p class="subtitle">Live monitoring of a permissioned Ethereum healthcare-access ledger</p>
+    </div>
+    <div class="conn-block">
+      <span class="pulse-dot" id="conn-dot"></span>
+      <span id="conn-label">connecting</span>
+    </div>
+  </header>
+
+  <section class="chain-strip panel">
+    <div class="chain-item">
+      <span class="chain-label">Network</span>
+      <span class="chain-value" id="chain-id">—</span>
+    </div>
+    <div class="chain-item">
+      <span class="chain-label">Contract</span>
+      <span class="chain-value mono" id="chain-address">—</span>
+    </div>
+    <div class="chain-item">
+      <span class="chain-label">Latest block</span>
+      <span class="chain-value" id="chain-block">—</span>
+    </div>
+    <div class="chain-item">
+      <span class="chain-label">Accounts</span>
+      <span class="chain-value" id="chain-accounts">—</span>
+    </div>
+  </section>
+
+  <section class="stat-strip">
+    <div class="stat-tile">
+      <span class="stat-value" id="stat-total">—</span>
+      <span class="stat-label">on-chain events scored</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-value" id="stat-anomaly-rate">—</span>
+      <span class="stat-label">anomaly rate</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-value" id="stat-open-alerts">—</span>
+      <span class="stat-label">open alerts</span>
+    </div>
+    <div class="stat-tile">
+      <span class="stat-value" id="stat-latency">—</span>
+      <span class="stat-label">ms / decision</span>
+    </div>
+  </section>
+
+  <section class="main-grid">
+    <div class="panel feed-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Live on-chain event feed</h2>
+        <label class="toggle">
+          <input type="checkbox" id="only-anomalies" />
+          <span>Anomalies only</span>
+        </label>
+      </div>
+      <div class="table-scroll">
+        <table class="feed-table">
+          <thead>
+            <tr><th>tx</th><th>entity</th><th>role</th><th>action</th><th>score</th><th></th></tr>
+          </thead>
+          <tbody id="feed-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel detail-panel">
+      <div class="detail-empty" id="detail-empty">Select an on-chain event to inspect the model's decision.</div>
+      <div id="detail-content" class="hidden">
+        <div class="detail-head">
+          <span class="detail-hash" id="detail-hash"></span>
+          <span class="severity-badge" id="detail-severity">—</span>
+        </div>
+        <div class="detail-meta" id="detail-meta"></div>
+        <h3 class="detail-subhead">Temporal attention — last 20 on-chain events for this entity</h3>
+        <canvas id="attention-chart" height="90"></canvas>
+        <h3 class="detail-subhead">Feature gate — which signals the model is weighting</h3>
+        <canvas id="gate-chart" height="140"></canvas>
+        <div class="feedback-row" id="feedback-row">
+          <span>Genuine anomaly?</span>
+          <button class="btn btn-confirm" id="btn-confirm">Confirm</button>
+          <button class="btn btn-dismiss" id="btn-dismiss">Dismiss</button>
+        </div>
+        <div class="feedback-done hidden" id="feedback-done"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="panel-title">Audit export</h2>
+      <button class="btn btn-outline" id="export-btn">Export full on-chain trail (CSV)</button>
+    </div>
+    <p class="panel-note">Every scored on-chain transaction, its decision, and supporting attention/gate values.</p>
+  </section>
+
+  <footer class="scope-note">
+    Developed at the Faculty of Computers and Information, Information Systems Department, Assiut University, Egypt — by M. A. Fouly, T. H. A. Soliman, and A. I. Taloba.
+  </footer>
+</div>
+
+<script src="vendor/chart.umd.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
